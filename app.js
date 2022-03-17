@@ -7,20 +7,17 @@ let analyser;
 let width, height;
 let dataArray, bufferLength;
 let masterGain, stereoPanner;
-let eqSwitch = 0;
 let count=0;
 
-
-$(".slider").on("click", function () {
-    eqSwitch++;
+$(".switch").on("click", function () {
     audioContext = new audioCtx()
     buildAudioGraph();
 
 });
 
 function buildAudioGraph() {
-    var mediaElement = document.getElementById('preview-player');
-    var sourceNode = audioContext.createMediaElementSource(mediaElement);
+    let mediaElement = document.getElementById('preview-player');
+    let sourceNode = audioContext.createMediaElementSource(mediaElement);
 
     analyser = audioContext.createAnalyser();
 
@@ -31,7 +28,7 @@ function buildAudioGraph() {
 
 
     [60, 170, 350, 1000, 3500, 10000].forEach(function (freq, i) {
-        var eq = audioContext.createBiquadFilter();
+        let eq = audioContext.createBiquadFilter();
         eq.frequency.value = freq;
         eq.type = "peaking";
         eq.gain.value = 0;
@@ -39,7 +36,7 @@ function buildAudioGraph() {
     });
 
     sourceNode.connect(filters[0]);
-    for (var i = 0; i < filters.length - 1; i++) {
+    for (let i = 0; i < filters.length - 1; i++) {
         filters[i].connect(filters[i + 1]);
     }
 
@@ -59,10 +56,10 @@ function buildAudioGraph() {
 
 
 function changeGain(sliderVal, nbFilter) {
-    var value = parseFloat(sliderVal);
+    let value = parseFloat(sliderVal);
     filters[nbFilter].gain.value = value;
 
-    var output = document.querySelector("#gain" + nbFilter);
+    let output = document.querySelector("#gain" + nbFilter);
     output.value = value + " dB";
 
 
